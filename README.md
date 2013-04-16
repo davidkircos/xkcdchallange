@@ -1,7 +1,7 @@
 xkcdchallange
 =============
 
-My attempt at xkcd's april 1st hashing challenge.
+My attempt at xkcd's april 1st hashing challenge from http://almamater.xkcd.com.
 
 Speed
 =====
