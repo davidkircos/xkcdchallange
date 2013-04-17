@@ -1,7 +1,11 @@
 xkcdchallange
 =============
 
-My attempt at xkcd's april 1st hashing challenge from http://almamater.xkcd.com.  Requires PySkein module and is run with the command "python3 xkcdchallange.py".
+My attempt at xkcd's april 1st hashing challenge from http://almamater.xkcd.com.  Requires PySkein module and Python 3.
+
+Usage
+=====
+$ python3 xkcdchallange.py
 
 Speed
 =====
