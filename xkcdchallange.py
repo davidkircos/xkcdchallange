@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import skein
 import time, random
 from multiprocessing import Array, Value, Lock, cpu_count, Pool
@@ -16,24 +14,25 @@ process_array = Array(c_double, cpu_count(), lock=Lock())
 
 high_value = Value(c_int, 1024)
 
+
 def run_worker():
-    #code used to assign a unique value (local_id) to each running thread
-    count = 0
-    
+    count =0
     for item in process_array:
         if item==0:
             local_id = count
         count +=1
-
+    process_array[local_id] = 6
+    
+    #local_id is this threads process id
     best = high_value.value
     
-    guess = random.getrandbits(512)
+    guess = random.getrandbits(128)
     start_time = time.time()
-
-    #number of times loop is run per thread
+    
     i = 1
     
     while True:
+
         encoded = hex(guess)[2:].encode('ascii')
         digest = int(skein.skein1024(encoded).hexdigest(), 16)
         diff = bin(digest ^ TARGET).count('1')
@@ -49,7 +48,6 @@ def run_worker():
                 
         if i%500000==0:
             current_speed = i/(time.time()-start_time)
-            #print("pid:", local_id, "::", "Count:", i, "Rate:", current_speed, "hashes per second.")
             process_array[local_id] = current_speed
 
         i += 1
