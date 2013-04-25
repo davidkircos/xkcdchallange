@@ -16,6 +16,7 @@ high_value = Value(c_int, 1024)
 
 def run_worker():
     #method of naming each thread individually
+    time.sleep(random.random()*cpu_count()) #reduces chance of two processes claiming the same id
     count =0
     for item in process_array:
         if item==0:
