@@ -10,20 +10,19 @@ TARGETSTR = '5b4da95f5fa08280fc9879df44f418c8f9f12ba424b7757de02bbdfbae0d4c4fd' 
 
 TARGET = int(TARGETSTR, 16)
 
+#variables shared between all processes
 process_array = Array(c_double, cpu_count(), lock=Lock())
-
 high_value = Value(c_int, 1024)
 
-
 def run_worker():
+    #method of naming each thread individually
     count =0
     for item in process_array:
         if item==0:
+            #local_id is this threads process id
             local_id = count
         count +=1
-    process_array[local_id] = 6
     
-    #local_id is this threads process id
     best = high_value.value
     
     guess = random.getrandbits(128)
@@ -32,11 +31,12 @@ def run_worker():
     i = 1
     
     while True:
-
+	
+	#the meat of the loop
         encoded = hex(guess)[2:].encode('ascii')
         digest = int(skein.skein1024(encoded).hexdigest(), 16)
         diff = bin(digest ^ TARGET).count('1')
-
+	
         if diff < best:
             if diff < high_value.value:
                 best = diff
