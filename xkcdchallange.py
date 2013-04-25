@@ -22,6 +22,7 @@ def run_worker():
             #local_id is this threads process id
             local_id = count
         count +=1
+    process_array[local_id] = 1
     
     best = high_value.value
     
